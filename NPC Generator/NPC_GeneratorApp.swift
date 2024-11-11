@@ -13,7 +13,7 @@ struct NPC_GeneratorApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BaseView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

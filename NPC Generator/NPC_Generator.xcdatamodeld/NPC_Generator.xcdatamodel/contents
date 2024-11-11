@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    <entity name="NPC" representedClassName="NPC" syncable="YES" codeGenerationType="class">
+        <attribute name="aiGenerated" optional="NO" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="alignment" optional="YES" attributeType="String"/>
+        <attribute name="appearance" optional="YES" attributeType="String"/>
+        <attribute name="background" optional="YES" attributeType="String"/>
+        <attribute name="backstory" optional="YES" attributeType="String"/>
+        <attribute name="class" optional="NO" attributeType="String"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="equipment" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="level" optional="NO" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="personality" optional="YES" attributeType="String"/>
+        <attribute name="race" optional="NO" attributeType="String"/>
+        <attribute name="skills" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="updatedAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="abilities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ability" inverseName="npc" inverseEntity="Ability"/>
+        <relationship name="traits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Trait" inverseName="npc" inverseEntity="Trait"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="Trait" representedClassName="Trait" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="NO" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <relationship name="npc" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="NPC" inverseName="traits" inverseEntity="NPC"/>
+    </entity>
+    <entity name="Ability" representedClassName="Ability" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="modifier" optional="NO" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="score" optional="NO" attributeType="Integer 16" defaultValueString="10" usesScalarValueType="YES"/>
+        <relationship name="npc" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="NPC" inverseName="abilities" inverseEntity="NPC"/>
+    </entity>
 </model>
