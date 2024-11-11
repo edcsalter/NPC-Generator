@@ -1,23 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="NPC" representedClassName="NPC" syncable="YES" codeGenerationType="class">
         <attribute name="aiGenerated" optional="NO" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="alignment" optional="YES" attributeType="String"/>
         <attribute name="appearance" optional="YES" attributeType="String"/>
         <attribute name="background" optional="YES" attributeType="String"/>
         <attribute name="backstory" optional="YES" attributeType="String"/>
-        <attribute name="class" optional="NO" attributeType="String"/>
+        <attribute name="characterClass" optional="NO" attributeType="String"/>
         <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="equipment" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isFavorite" optional="NO" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="level" optional="NO" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="personality" optional="YES" attributeType="String"/>
+        <attribute name="profession" optional="YES" attributeType="String"/>
         <attribute name="race" optional="NO" attributeType="String"/>
         <attribute name="skills" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="updatedAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="spellSlots" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
         <relationship name="abilities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ability" inverseName="npc" inverseEntity="Ability"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="npcs" inverseEntity="Group"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="npcs" inverseEntity="Tag"/>
         <relationship name="traits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Trait" inverseName="npc" inverseEntity="Trait"/>
+        <relationship name="knownSpells" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Spell" inverseName="npc" inverseEntity="Spell"/>
+    </entity>
+     <entity name="Spell" representedClassName="Spell" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="level" optional="NO" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="school" optional="YES" attributeType="String"/>
+        <attribute name="castingTime" optional="YES" attributeType="String"/>
+        <attribute name="range" optional="YES" attributeType="String"/>
+        <attribute name="components" optional="YES" attributeType="String"/>
+        <attribute name="duration" optional="YES" attributeType="String"/>
+        <attribute name="descriptionText" optional="YES" attributeType="String"/>
+        <relationship name="npc" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="NPC" inverseName="knownSpells" inverseEntity="NPC"/>
+    </entity>
+    <entity name="Group" representedClassName="Group" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="npcs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NPC" inverseName="group" inverseEntity="NPC"/>
+    </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <relationship name="npcs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NPC" inverseName="tags" inverseEntity="NPC"/>
     </entity>
     <entity name="Trait" representedClassName="Trait" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="NO" attributeType="String"/>
